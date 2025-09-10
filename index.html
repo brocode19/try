@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Model with Always-Visible AR Button</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    model-viewer {
+      width: 100%;
+      max-width: 600px;
+      height: 500px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #ar-button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #ar-button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <model-viewer id="modelViewer"
+    src="sitarbuckss.glb"
+    ios-src="model.usdz"
+    alt="3D model with AR support"
+    ar
+    ar-modes="scene-viewer quick-look webxr"
+    auto-rotate
+    camera-controls
+    environment-image="neutral">
+  </model-viewer>
+
+  <button id="ar-button">View in AR</button>
+
+  <script>
+    const modelViewer = document.getElementById('modelViewer');
+    const arButton = document.getElementById('ar-button');
+
+    arButton.addEventListener('click', () => {
+      modelViewer.enterAR();
+    });
+
+    // Optional: alert if AR fails (e.g., unsupported device)
+    modelViewer.addEventListener('ar-status', (event) => {
+      if (event.detail.status === 'failed') {
+        alert('AR could not be activated on this device.');
+      }
+    });
+  </script>
+
+</body>
+</html>
